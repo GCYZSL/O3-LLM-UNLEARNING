@@ -1,4 +1,4 @@
-We Upload an initial version of our Code on SOUL and will upload the code for other datasets. 
+We upload an initial version of our Code on SOUL and will upload the code for other datasets. 
 
 ## 1) Installation
 You can install the required dependencies using the following command:
