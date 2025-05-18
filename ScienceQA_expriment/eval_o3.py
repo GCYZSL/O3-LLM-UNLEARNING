@@ -126,21 +126,11 @@ def obtain_weights(input_x, gmm, x0):
 
     return w_res
 # print(np.mean(all_w_res), min(all_w_res), max(all_w_res))
-# mean, min, max 0.3775407149001829 0.37754066879814546 0.37755057892780686 scienceqa_not_biology_physics_chemistry_economics_test_RD
-# 0.4683295632561949 0.37754066879814546 0.985614423543908  1192/1581 0.377 scienceqa_biology_test_SD
 class Prompter(object):
     __slots__ = ("template", "_verbose")
 
     def __init__(self, template_name: str = "", verbose: bool = False):
         self._verbose = verbose
-        # if not template_name:
-        #     # Enforce the default here, so the constructor can be called with '' and will not break.
-        #     template_name = "alpaca"
-        # file_name = osp.join("templates", f"{template_name}.json")
-        # if not osp.exists(file_name):
-        #     raise ValueError(f"Can't read {file_name}")
-        # with open(file_name) as fp:
-        #     self.template = json.load(fp)
         self.template = {
             "description": "Template used by Alpaca-LoRA.",
             "prompt_input": "Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.\n\n### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n",
@@ -193,21 +183,16 @@ def main():
     parser.add_argument('--ood_base_model', type=str, default="roberta-large", help='base_model')
     parser.add_argument('--lora_weights', type=str, default= "./SCALE_0.1_seed_1_o_unlearn_lora_force_checkpoints_5/lora_force_random_biology_force",
                         help='lora_model')
-    # ./SCALE_0.1_seed_0_o_unlearn_lora_force_checkpoints_5/lora_force_random_biology_force
     parser.add_argument('--ood_weights', type=str, default= "./ood_checkpoints_scienceqa_1/",#"./ood_checkpoints_new_0/",  # o: 6.05 2.02
                         help='ood_model')
-    parser.add_argument('--ood_type', type=str, default="biology",  # o: 6.05 2.02
+    parser.add_argument('--ood_type', type=str, default="biology",
                         help='ood type')
     # biology
-    parser.add_argument('--ood_setting', type=str, default="c",  # o: 6.05 2.02
+    parser.add_argument('--ood_setting', type=str, default="c",
                         help='ood setting')
-    parser.add_argument('--ood_setting_name', type=str, default="scienceqa",  # o: 6.05 2.02
+    parser.add_argument('--ood_setting_name', type=str, default="scienceqa",
                         help='ood setting name')
     parser.add_argument('--seed', type=int, default=1, help='base_model')
-
-    # SCALE_0.1_seed_0_o_unlearn_lora_force_checkpoints_5/lora_force_random_biology_force
-    # ./data/scienceqa_SD_5/scienceqa_biology_test_SD.json 6.3% 1.1718236274499052 0.4530488025577745 1.2
-
     # Parsing arguments
     args = parser.parse_args()
     set_seed(args.seed)
@@ -230,8 +215,8 @@ def main():
     print(ood_setting)
     print(args.ood_setting_name)
 
-    ood_weights = [] # ["biology", "physics", "chemistry", "economics", 'earth-science']
-    for i in ood_types:  # "biology", "physics", "chemistry", "economics"
+    ood_weights = []
+    for i in ood_types:  # "biology", "physics", "chemistry"
         o_p = args.ood_weights + f"{ood_setting_names}_{i}_ood_{ood_setting_names}"
         ood_weights.append(o_p)
     ood_type = "ocsvm"
@@ -257,7 +242,7 @@ def main():
     ]
     config = AutoConfig.from_pretrained(base_model)
     config.lora_target_modules = lora_target_modules
-    # config.ood_weight = ood_weight
+
     orthogonal_loss = False
     olora_weights = {}
     config.orthogonal_loss = orthogonal_loss
