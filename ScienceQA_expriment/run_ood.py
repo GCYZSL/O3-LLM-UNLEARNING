@@ -125,7 +125,7 @@ def train(args, model, train_dataset, test_dataset, benchmarks, save_name):
                 acc = (Y_predict == Y_test).mean()
                 print('Test set accuracy: {:.3f}'.format(acc))
 
-                if acc > acc_global:
+                if True:
                     ood_path = f"./ood_checkpoints_{save_name}_{seed}"
 
                     if not os.path.exists(ood_path):
