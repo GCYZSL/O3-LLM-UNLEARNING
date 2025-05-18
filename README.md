@@ -5,7 +5,7 @@ that includes an Orthogonal low-rank adapter (LoRA) for continually unlearning r
 to measure the similarity between input and unlearning data in **[On Large Language Model Continual Unlearning](https://openreview.net/forum?id=Essg9kb4yx)**. 
 The paper is accepted to ICLR 2025. 
 
-The code is developed based on [SOUL](https://github.com/OPTML-Group/SOUL) and [ScienceQA](https://github.com/lupantech/ScienceQA) project.
+Parts of our code are inspired by the implementations of [SOUL](https://github.com/OPTML-Group/SOUL) and [ScienceQA](https://github.com/lupantech/ScienceQA) project. We thank the authors of these repositories for their valuable work. 
 
 <img src="Overview.png" width="800">
 
